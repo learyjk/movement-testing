@@ -12,6 +12,7 @@ public class MovingSphere : MonoBehaviour
     Rect allowedArea = new Rect(-5f, -5f, 10f, 10f);
 
     void Update() {
+        //add a comment
         Vector3 velocity;
         Vector2 playerInput;
 
@@ -32,9 +33,30 @@ public class MovingSphere : MonoBehaviour
         Vector3 displacement = velocity * Time.deltaTime;
         
         Vector3 newPosition = transform.localPosition + displacement;
-        if (!allowedArea.Contains(new Vector2(newPosition.x, newPosition.z))) {
-            newPosition = transform.localPosition;
+
+        // if (!allowedArea.Contains(new Vector2(newPosition.x, newPosition.z))) {
+        //     newPosition.x = Mathf.Clamp(newPosition.x, allowedArea.xMin, allowedArea.xMax);
+        //     newPosition.z = Mathf.Clamp(newPosition.z, allowedArea.yMin, allowedArea.yMax);
+        // }
+
+        if (newPosition.x < allowedArea.xMin) {
+            newPosition.x = allowedArea.xMin;
+            velocity.x = -velocity.x;
         }
+        else if (newPosition.x > allowedArea.xMax) {
+            newPosition.x = allowedArea.xMax;
+            velocity.x = -velocity.x;
+        }
+
+        if (newPosition.z < allowedArea.yMin) {
+            newPosition.z = allowedArea.yMin;
+            velocity.z = -velocity.z;
+        }
+        else if (newPosition.z > allowedArea.yMax) {
+            newPosition.z = allowedArea.yMax;
+            velocity.z = -velocity.z;
+        }
+
         transform.localPosition = newPosition;
     }
 
